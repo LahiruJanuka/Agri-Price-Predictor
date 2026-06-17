@@ -43,11 +43,20 @@ def download_pdf(url, save_path):
     return save_path
 
 def fetch_today_pdf():
-    """Download today's PDF and return the file path."""
+    """Download today's PDF and return the file path with its true document date."""
+    import re
     ensure_dir(PDF_DIR)
     pdf_url = get_latest_pdf_url()
-    today_str = datetime.now().strftime("%Y%m%d")
-    save_path = os.path.join(PDF_DIR, f"price_report_{today_str}.pdf")
+    
+    # Extract the date string from the URL (e.g., matching '20260617')
+    date_match = re.search(r'price_report_(\d{8})', pdf_url)
+    if date_match:
+        doc_date_str = date_match.group(1) # e.g., "20260617"
+    else:
+        # Fallback to yesterday if the pattern fails for some reason
+        doc_date_str = (datetime.now() - timedelta(days=1)).strftime("%Y%m%d")
+        
+    save_path = os.path.join(PDF_DIR, f"price_report_{doc_date_str}.pdf")
 
     if os.path.exists(save_path):
         logging.info(f"PDF already exists: {save_path}")
@@ -56,5 +65,4 @@ def fetch_today_pdf():
         download_pdf(pdf_url, save_path)
         logging.info(f"Saved to {save_path}")
 
-    return save_path
-    
+    return save_path  

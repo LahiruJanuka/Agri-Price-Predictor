@@ -1,0 +1,249 @@
+date,category,item,unit,market,price_type,price,yesterday_price,week_avg,daily_change
+2026-06-16,GENERAL,Apple (Imp),Rs./Each,Pettah/Peliyagoda,Retail,215.0,,215.0,
+2026-06-17,GENERAL,Apple (Imp),Rs./Each,Pettah/Peliyagoda,Retail,215.0,215.0,215.0,0.0
+2026-06-16,GENERAL,Balaya,Rs./kg,Pettah/Peliyagoda,Wholesale,1400.0,,1400.0,
+2026-06-17,GENERAL,Balaya,Rs./kg,Pettah/Peliyagoda,Wholesale,1300.0,1400.0,1350.0,-100.0
+2026-06-16,GENERAL,Banana (Sour),Rs./kg,Dambulla/Negombo,Retail,90.0,,90.0,
+2026-06-17,GENERAL,Banana (Sour),Rs./kg,Dambulla/Negombo,Retail,100.0,90.0,95.0,10.0
+2026-06-16,GENERAL,Banana (Sour),Rs./kg,Dambulla/Negombo,Wholesale,60.0,,60.0,
+2026-06-17,GENERAL,Banana (Sour),Rs./kg,Dambulla/Negombo,Wholesale,70.0,60.0,65.0,10.0
+2026-06-16,GENERAL,Banana (Sour),Rs./kg,Pettah/Peliyagoda,Retail,150.0,,150.0,
+2026-06-17,GENERAL,Banana (Sour),Rs./kg,Pettah/Peliyagoda,Retail,150.0,150.0,150.0,0.0
+2026-06-16,GENERAL,Banana (Sour),Rs./kg,Pettah/Peliyagoda,Wholesale,100.0,,100.0,
+2026-06-17,GENERAL,Banana (Sour),Rs./kg,Pettah/Peliyagoda,Wholesale,100.0,100.0,100.0,0.0
+2026-06-16,GENERAL,Beans,Rs./kg,Dambulla/Negombo,Retail,470.0,,470.0,
+2026-06-17,GENERAL,Beans,Rs./kg,Dambulla/Negombo,Retail,480.0,470.0,475.0,10.0
+2026-06-16,GENERAL,Beans,Rs./kg,Dambulla/Negombo,Wholesale,440.0,,440.0,
+2026-06-17,GENERAL,Beans,Rs./kg,Dambulla/Negombo,Wholesale,450.0,440.0,445.0,10.0
+2026-06-16,GENERAL,Beans,Rs./kg,Pettah/Peliyagoda,Retail,600.0,,600.0,
+2026-06-17,GENERAL,Beans,Rs./kg,Pettah/Peliyagoda,Retail,550.0,600.0,575.0,-50.0
+2026-06-16,GENERAL,Beans,Rs./kg,Pettah/Peliyagoda,Wholesale,550.0,,550.0,
+2026-06-17,GENERAL,Beans,Rs./kg,Pettah/Peliyagoda,Wholesale,500.0,550.0,525.0,-50.0
+2026-06-16,GENERAL,Big Onion (Imp),Rs./kg,Dambulla/Negombo,Retail,185.0,,185.0,
+2026-06-17,GENERAL,Big Onion (Imp),Rs./kg,Dambulla/Negombo,Retail,175.0,185.0,180.0,-10.0
+2026-06-16,GENERAL,Big Onion (Imp),Rs./kg,Dambulla/Negombo,Wholesale,165.0,,165.0,
+2026-06-17,GENERAL,Big Onion (Imp),Rs./kg,Dambulla/Negombo,Wholesale,155.0,165.0,160.0,-10.0
+2026-06-16,GENERAL,Big Onion (Imp),Rs./kg,Pettah/Peliyagoda,Retail,203.0,,203.0,
+2026-06-17,GENERAL,Big Onion (Imp),Rs./kg,Pettah/Peliyagoda,Retail,200.0,203.0,201.5,-3.0
+2026-06-16,GENERAL,Big Onion (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,162.0,,162.0,
+2026-06-17,GENERAL,Big Onion (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,157.0,162.0,159.5,-5.0
+2026-06-16,GENERAL,Brinjal,Rs./kg,Dambulla/Negombo,Retail,170.0,,170.0,
+2026-06-17,GENERAL,Brinjal,Rs./kg,Dambulla/Negombo,Retail,195.0,170.0,182.5,25.0
+2026-06-16,GENERAL,Brinjal,Rs./kg,Dambulla/Negombo,Wholesale,140.0,,140.0,
+2026-06-17,GENERAL,Brinjal,Rs./kg,Dambulla/Negombo,Wholesale,165.0,140.0,152.5,25.0
+2026-06-16,GENERAL,Brinjal,Rs./kg,Pettah/Peliyagoda,Retail,300.0,,300.0,
+2026-06-17,GENERAL,Brinjal,Rs./kg,Pettah/Peliyagoda,Retail,300.0,300.0,300.0,0.0
+2026-06-16,GENERAL,Brinjal,Rs./kg,Pettah/Peliyagoda,Wholesale,250.0,,250.0,
+2026-06-17,GENERAL,Brinjal,Rs./kg,Pettah/Peliyagoda,Wholesale,250.0,250.0,250.0,0.0
+2026-06-16,GENERAL,Cabbage,Rs./kg,Dambulla/Negombo,Retail,155.0,,155.0,
+2026-06-17,GENERAL,Cabbage,Rs./kg,Dambulla/Negombo,Retail,145.0,155.0,150.0,-10.0
+2026-06-16,GENERAL,Cabbage,Rs./kg,Dambulla/Negombo,Wholesale,125.0,,125.0,
+2026-06-17,GENERAL,Cabbage,Rs./kg,Dambulla/Negombo,Wholesale,115.0,125.0,120.0,-10.0
+2026-06-16,GENERAL,Cabbage,Rs./kg,Pettah/Peliyagoda,Retail,170.0,,170.0,
+2026-06-17,GENERAL,Cabbage,Rs./kg,Pettah/Peliyagoda,Retail,180.0,170.0,175.0,10.0
+2026-06-16,GENERAL,Cabbage,Rs./kg,Pettah/Peliyagoda,Wholesale,100.0,,100.0,
+2026-06-17,GENERAL,Cabbage,Rs./kg,Pettah/Peliyagoda,Wholesale,100.0,100.0,100.0,0.0
+2026-06-16,GENERAL,Carrot,Rs./kg,Dambulla/Negombo,Retail,320.0,,320.0,
+2026-06-17,GENERAL,Carrot,Rs./kg,Dambulla/Negombo,Retail,295.0,320.0,307.5,-25.0
+2026-06-16,GENERAL,Carrot,Rs./kg,Dambulla/Negombo,Wholesale,290.0,,290.0,
+2026-06-17,GENERAL,Carrot,Rs./kg,Dambulla/Negombo,Wholesale,265.0,290.0,277.5,-25.0
+2026-06-16,GENERAL,Carrot,Rs./kg,Pettah/Peliyagoda,Retail,350.0,,350.0,
+2026-06-17,GENERAL,Carrot,Rs./kg,Pettah/Peliyagoda,Retail,350.0,350.0,350.0,0.0
+2026-06-16,GENERAL,Carrot,Rs./kg,Pettah/Peliyagoda,Wholesale,300.0,,300.0,
+2026-06-17,GENERAL,Carrot,Rs./kg,Pettah/Peliyagoda,Wholesale,300.0,300.0,300.0,0.0
+2026-06-16,GENERAL,Coconut (Avg.),Rs./Nut,Dambulla/Negombo,Retail,110.0,,110.0,
+2026-06-17,GENERAL,Coconut (Avg.),Rs./Nut,Dambulla/Negombo,Retail,110.0,110.0,110.0,0.0
+2026-06-16,GENERAL,Coconut (Avg.),Rs./Nut,Dambulla/Negombo,Wholesale,105.0,,105.0,
+2026-06-17,GENERAL,Coconut (Avg.),Rs./Nut,Dambulla/Negombo,Wholesale,105.0,105.0,105.0,0.0
+2026-06-16,GENERAL,Coconut (Avg.),Rs./Nut,Pettah/Peliyagoda,Retail,158.0,,158.0,
+2026-06-17,GENERAL,Coconut (Avg.),Rs./Nut,Pettah/Peliyagoda,Retail,158.0,158.0,158.0,0.0
+2026-06-16,GENERAL,Coconut (Avg.),Rs./Nut,Pettah/Peliyagoda,Wholesale,120.0,,120.0,
+2026-06-17,GENERAL,Coconut (Avg.),Rs./Nut,Pettah/Peliyagoda,Wholesale,120.0,120.0,120.0,0.0
+2026-06-16,GENERAL,Coconut oil,Rs./Ltr,Pettah/Peliyagoda,Retail,897.0,,897.0,
+2026-06-17,GENERAL,Coconut oil,Rs./Ltr,Pettah/Peliyagoda,Retail,897.0,897.0,897.0,0.0
+2026-06-16,GENERAL,Coconut oil,Rs./Ltr,Pettah/Peliyagoda,Wholesale,832.0,,832.0,
+2026-06-17,GENERAL,Coconut oil,Rs./Ltr,Pettah/Peliyagoda,Wholesale,832.0,832.0,832.0,0.0
+2026-06-16,GENERAL,Dried Chilli (Imp),Rs./kg,Dambulla/Negombo,Retail,1068.0,,1068.0,
+2026-06-17,GENERAL,Dried Chilli (Imp),Rs./kg,Dambulla/Negombo,Retail,1105.0,1068.0,1086.5,37.0
+2026-06-16,GENERAL,Dried Chilli (Imp),Rs./kg,Dambulla/Negombo,Wholesale,1038.0,,1038.0,
+2026-06-17,GENERAL,Dried Chilli (Imp),Rs./kg,Dambulla/Negombo,Wholesale,1075.0,1038.0,1056.5,37.0
+2026-06-16,GENERAL,Dried Chilli (Imp),Rs./kg,Pettah/Peliyagoda,Retail,1083.0,,1083.0,
+2026-06-17,GENERAL,Dried Chilli (Imp),Rs./kg,Pettah/Peliyagoda,Retail,1083.0,1083.0,1083.0,0.0
+2026-06-16,GENERAL,Dried Chilli (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,1020.0,,1020.0,
+2026-06-17,GENERAL,Dried Chilli (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,996.0,1020.0,1008.0,-24.0
+2026-06-16,GENERAL,Egg (White),Rs./Each,Pettah/Peliyagoda,Retail,37.0,,37.0,
+2026-06-17,GENERAL,Egg (White),Rs./Each,Pettah/Peliyagoda,Retail,37.0,37.0,37.0,0.0
+2026-06-16,GENERAL,Egg (White),Rs./Each,Pettah/Peliyagoda,Wholesale,35.0,,35.0,
+2026-06-17,GENERAL,Egg (White),Rs./Each,Pettah/Peliyagoda,Wholesale,35.0,35.0,35.0,0.0
+2026-06-16,GENERAL,Green Chilli,Rs./kg,Dambulla/Negombo,Retail,480.0,,480.0,
+2026-06-17,GENERAL,Green Chilli,Rs./kg,Dambulla/Negombo,Retail,530.0,480.0,505.0,50.0
+2026-06-16,GENERAL,Green Chilli,Rs./kg,Dambulla/Negombo,Wholesale,450.0,,450.0,
+2026-06-17,GENERAL,Green Chilli,Rs./kg,Dambulla/Negombo,Wholesale,500.0,450.0,475.0,50.0
+2026-06-16,GENERAL,Green Chilli,Rs./kg,Pettah/Peliyagoda,Retail,750.0,,750.0,
+2026-06-17,GENERAL,Green Chilli,Rs./kg,Pettah/Peliyagoda,Retail,800.0,750.0,775.0,50.0
+2026-06-16,GENERAL,Green Chilli,Rs./kg,Pettah/Peliyagoda,Wholesale,650.0,,650.0,
+2026-06-17,GENERAL,Green Chilli,Rs./kg,Pettah/Peliyagoda,Wholesale,700.0,650.0,675.0,50.0
+2026-06-16,GENERAL,Hurulla,Rs./kg,Dambulla/Negombo,Retail,1500.0,,1500.0,
+2026-06-17,GENERAL,Hurulla,Rs./kg,Dambulla/Negombo,Retail,1500.0,1500.0,1500.0,0.0
+2026-06-16,GENERAL,Hurulla,Rs./kg,Dambulla/Negombo,Wholesale,1220.0,,1220.0,
+2026-06-17,GENERAL,Hurulla,Rs./kg,Dambulla/Negombo,Wholesale,1220.0,1220.0,1220.0,0.0
+2026-06-16,GENERAL,Hurulla,Rs./kg,Pettah/Peliyagoda,Wholesale,1100.0,,1100.0,
+2026-06-17,GENERAL,Hurulla,Rs./kg,Pettah/Peliyagoda,Wholesale,1100.0,1100.0,1100.0,0.0
+2026-06-16,GENERAL,Katta (Imp),Rs./kg,Pettah/Peliyagoda,Retail,2783.0,,2783.0,
+2026-06-17,GENERAL,Katta (Imp),Rs./kg,Pettah/Peliyagoda,Retail,2783.0,2783.0,2783.0,0.0
+2026-06-16,GENERAL,Katta (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,2138.0,,2138.0,
+2026-06-17,GENERAL,Katta (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,2233.0,2138.0,2185.5,95.0
+2026-06-16,GENERAL,Kekulu (Red),Rs./kg,Dambulla/Negombo,Retail,225.0,,225.0,
+2026-06-17,GENERAL,Kekulu (Red),Rs./kg,Dambulla/Negombo,Retail,225.0,225.0,225.0,0.0
+2026-06-16,GENERAL,Kekulu (Red),Rs./kg,Dambulla/Negombo,Wholesale,189.0,,189.0,
+2026-06-17,GENERAL,Kekulu (Red),Rs./kg,Dambulla/Negombo,Wholesale,189.0,189.0,189.0,0.0
+2026-06-16,GENERAL,Kekulu (Red),Rs./kg,Pettah/Peliyagoda,Retail,197.0,,197.0,
+2026-06-17,GENERAL,Kekulu (Red),Rs./kg,Pettah/Peliyagoda,Retail,197.0,197.0,197.0,0.0
+2026-06-16,GENERAL,Kekulu (Red),Rs./kg,Pettah/Peliyagoda,Wholesale,172.0,,172.0,
+2026-06-17,GENERAL,Kekulu (Red),Rs./kg,Pettah/Peliyagoda,Wholesale,172.0,172.0,172.0,0.0
+2026-06-16,GENERAL,Kekulu (White),Rs./kg,Dambulla/Negombo,Retail,225.0,,225.0,
+2026-06-17,GENERAL,Kekulu (White),Rs./kg,Dambulla/Negombo,Retail,225.0,225.0,225.0,0.0
+2026-06-16,GENERAL,Kekulu (White),Rs./kg,Dambulla/Negombo,Wholesale,188.0,,188.0,
+2026-06-17,GENERAL,Kekulu (White),Rs./kg,Dambulla/Negombo,Wholesale,188.0,188.0,188.0,0.0
+2026-06-16,GENERAL,Kekulu (White),Rs./kg,Pettah/Peliyagoda,Retail,210.0,,210.0,
+2026-06-17,GENERAL,Kekulu (White),Rs./kg,Pettah/Peliyagoda,Retail,210.0,210.0,210.0,0.0
+2026-06-16,GENERAL,Kekulu (White),Rs./kg,Pettah/Peliyagoda,Wholesale,193.0,,193.0,
+2026-06-17,GENERAL,Kekulu (White),Rs./kg,Pettah/Peliyagoda,Wholesale,193.0,193.0,193.0,0.0
+2026-06-16,GENERAL,Kelawalla,Rs./kg,Dambulla/Negombo,Retail,2480.0,,2480.0,
+2026-06-17,GENERAL,Kelawalla,Rs./kg,Dambulla/Negombo,Retail,2480.0,2480.0,2480.0,0.0
+2026-06-16,GENERAL,Kelawalla,Rs./kg,Dambulla/Negombo,Wholesale,1650.0,,1650.0,
+2026-06-17,GENERAL,Kelawalla,Rs./kg,Dambulla/Negombo,Wholesale,1650.0,1650.0,1650.0,0.0
+2026-06-16,GENERAL,Kelawalla,Rs./kg,Pettah/Peliyagoda,Wholesale,2000.0,,2000.0,
+2026-06-17,GENERAL,Kelawalla,Rs./kg,Pettah/Peliyagoda,Wholesale,2000.0,2000.0,2000.0,0.0
+2026-06-16,GENERAL,Lime,Rs./kg,Dambulla/Negombo,Retail,365.0,,365.0,
+2026-06-17,GENERAL,Lime,Rs./kg,Dambulla/Negombo,Retail,415.0,365.0,390.0,50.0
+2026-06-16,GENERAL,Lime,Rs./kg,Dambulla/Negombo,Wholesale,335.0,,335.0,
+2026-06-17,GENERAL,Lime,Rs./kg,Dambulla/Negombo,Wholesale,385.0,335.0,360.0,50.0
+2026-06-16,GENERAL,Lime,Rs./kg,Pettah/Peliyagoda,Retail,700.0,,700.0,
+2026-06-17,GENERAL,Lime,Rs./kg,Pettah/Peliyagoda,Retail,700.0,700.0,700.0,0.0
+2026-06-16,GENERAL,Lime,Rs./kg,Pettah/Peliyagoda,Wholesale,600.0,,600.0,
+2026-06-17,GENERAL,Lime,Rs./kg,Pettah/Peliyagoda,Wholesale,600.0,600.0,600.0,0.0
+2026-06-16,GENERAL,Linna,Rs./kg,Dambulla/Negombo,Retail,1400.0,,1400.0,
+2026-06-17,GENERAL,Linna,Rs./kg,Dambulla/Negombo,Retail,1480.0,1400.0,1440.0,80.0
+2026-06-16,GENERAL,Linna,Rs./kg,Dambulla/Negombo,Wholesale,1150.0,,1150.0,
+2026-06-17,GENERAL,Linna,Rs./kg,Dambulla/Negombo,Wholesale,1260.0,1150.0,1205.0,110.0
+2026-06-16,GENERAL,Linna,Rs./kg,Pettah/Peliyagoda,Wholesale,1400.0,,1400.0,
+2026-06-17,GENERAL,Linna,Rs./kg,Pettah/Peliyagoda,Wholesale,1400.0,1400.0,1400.0,0.0
+2026-06-16,GENERAL,Nadu,Rs./kg,Dambulla/Negombo,Retail,235.0,,235.0,
+2026-06-17,GENERAL,Nadu,Rs./kg,Dambulla/Negombo,Retail,235.0,235.0,235.0,0.0
+2026-06-16,GENERAL,Nadu,Rs./kg,Dambulla/Negombo,Wholesale,198.0,,198.0,
+2026-06-17,GENERAL,Nadu,Rs./kg,Dambulla/Negombo,Wholesale,198.0,198.0,198.0,0.0
+2026-06-16,GENERAL,Nadu,Rs./kg,Pettah/Peliyagoda,Retail,225.0,,225.0,
+2026-06-17,GENERAL,Nadu,Rs./kg,Pettah/Peliyagoda,Retail,225.0,225.0,225.0,0.0
+2026-06-16,GENERAL,Nadu,Rs./kg,Pettah/Peliyagoda,Wholesale,203.0,,203.0,
+2026-06-17,GENERAL,Nadu,Rs./kg,Pettah/Peliyagoda,Wholesale,203.0,203.0,203.0,0.0
+2026-06-16,GENERAL,Orange (Imp),Rs./Each,Pettah/Peliyagoda,Retail,190.0,,190.0,
+2026-06-17,GENERAL,Orange (Imp),Rs./Each,Pettah/Peliyagoda,Retail,190.0,190.0,190.0,0.0
+2026-06-16,GENERAL,Papaw,Rs./kg,Dambulla/Negombo,Retail,150.0,,150.0,
+2026-06-17,GENERAL,Papaw,Rs./kg,Dambulla/Negombo,Retail,155.0,150.0,152.5,5.0
+2026-06-16,GENERAL,Papaw,Rs./kg,Dambulla/Negombo,Wholesale,120.0,,120.0,
+2026-06-17,GENERAL,Papaw,Rs./kg,Dambulla/Negombo,Wholesale,125.0,120.0,122.5,5.0
+2026-06-16,GENERAL,Papaw,Rs./kg,Pettah/Peliyagoda,Retail,200.0,,200.0,
+2026-06-17,GENERAL,Papaw,Rs./kg,Pettah/Peliyagoda,Retail,220.0,200.0,210.0,20.0
+2026-06-16,GENERAL,Papaw,Rs./kg,Pettah/Peliyagoda,Wholesale,140.0,,140.0,
+2026-06-17,GENERAL,Papaw,Rs./kg,Pettah/Peliyagoda,Wholesale,160.0,140.0,150.0,20.0
+2026-06-16,GENERAL,Paraw,Rs./kg,Dambulla/Negombo,Retail,2600.0,,2600.0,
+2026-06-17,GENERAL,Paraw,Rs./kg,Dambulla/Negombo,Retail,2850.0,2600.0,2725.0,250.0
+2026-06-16,GENERAL,Paraw,Rs./kg,Dambulla/Negombo,Wholesale,1600.0,,1600.0,
+2026-06-17,GENERAL,Paraw,Rs./kg,Dambulla/Negombo,Wholesale,1600.0,1600.0,1600.0,0.0
+2026-06-16,GENERAL,Paraw,Rs./kg,Pettah/Peliyagoda,Wholesale,1600.0,,1600.0,
+2026-06-17,GENERAL,Paraw,Rs./kg,Pettah/Peliyagoda,Wholesale,1700.0,1600.0,1650.0,100.0
+2026-06-16,GENERAL,Pineapple,Rs./kg,Dambulla/Negombo,Retail,235.0,,235.0,
+2026-06-17,GENERAL,Pineapple,Rs./kg,Dambulla/Negombo,Retail,220.0,235.0,227.5,-15.0
+2026-06-16,GENERAL,Pineapple,Rs./kg,Dambulla/Negombo,Wholesale,205.0,,205.0,
+2026-06-17,GENERAL,Pineapple,Rs./kg,Dambulla/Negombo,Wholesale,190.0,205.0,197.5,-15.0
+2026-06-16,GENERAL,Pineapple,Rs./kg,Pettah/Peliyagoda,Retail,275.0,,275.0,
+2026-06-17,GENERAL,Pineapple,Rs./kg,Pettah/Peliyagoda,Retail,275.0,275.0,275.0,0.0
+2026-06-16,GENERAL,Ponni Samba (Imp),Rs./kg,Pettah/Peliyagoda,Retail,255.0,,255.0,
+2026-06-17,GENERAL,Ponni Samba (Imp),Rs./kg,Pettah/Peliyagoda,Retail,255.0,255.0,255.0,0.0
+2026-06-16,GENERAL,Ponni Samba (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,238.0,,238.0,
+2026-06-17,GENERAL,Ponni Samba (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,238.0,238.0,238.0,0.0
+2026-06-16,GENERAL,Potato (Imp),Rs./kg,Dambulla/Negombo,Retail,220.0,,220.0,
+2026-06-17,GENERAL,Potato (Imp),Rs./kg,Dambulla/Negombo,Retail,198.0,220.0,209.0,-22.0
+2026-06-16,GENERAL,Potato (Imp),Rs./kg,Dambulla/Negombo,Wholesale,200.0,,200.0,
+2026-06-17,GENERAL,Potato (Imp),Rs./kg,Dambulla/Negombo,Wholesale,178.0,200.0,189.0,-22.0
+2026-06-16,GENERAL,Potato (Imp),Rs./kg,Pettah/Peliyagoda,Retail,207.0,,207.0,
+2026-06-17,GENERAL,Potato (Imp),Rs./kg,Pettah/Peliyagoda,Retail,210.0,207.0,208.5,3.0
+2026-06-16,GENERAL,Potato (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,182.0,,182.0,
+2026-06-17,GENERAL,Potato (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,182.0,182.0,182.0,0.0
+2026-06-16,GENERAL,Potato (Local),Rs./kg,Dambulla/Negombo,Retail,275.0,,275.0,
+2026-06-17,GENERAL,Potato (Local),Rs./kg,Dambulla/Negombo,Retail,285.0,275.0,280.0,10.0
+2026-06-16,GENERAL,Potato (Local),Rs./kg,Dambulla/Negombo,Wholesale,255.0,,255.0,
+2026-06-17,GENERAL,Potato (Local),Rs./kg,Dambulla/Negombo,Wholesale,265.0,255.0,260.0,10.0
+2026-06-16,GENERAL,Potato (Local),Rs./kg,Pettah/Peliyagoda,Retail,370.0,,370.0,
+2026-06-17,GENERAL,Potato (Local),Rs./kg,Pettah/Peliyagoda,Retail,355.0,370.0,362.5,-15.0
+2026-06-16,GENERAL,Potato (Local),Rs./kg,Pettah/Peliyagoda,Wholesale,294.0,,294.0,
+2026-06-17,GENERAL,Potato (Local),Rs./kg,Pettah/Peliyagoda,Wholesale,288.0,294.0,291.0,-6.0
+2026-06-16,GENERAL,Pumpkin,Rs./kg,Dambulla/Negombo,Retail,85.0,,85.0,
+2026-06-17,GENERAL,Pumpkin,Rs./kg,Dambulla/Negombo,Retail,123.0,85.0,104.0,38.0
+2026-06-16,GENERAL,Pumpkin,Rs./kg,Dambulla/Negombo,Wholesale,55.0,,55.0,
+2026-06-17,GENERAL,Pumpkin,Rs./kg,Dambulla/Negombo,Wholesale,93.0,55.0,74.0,38.0
+2026-06-16,GENERAL,Pumpkin,Rs./kg,Pettah/Peliyagoda,Retail,130.0,,130.0,
+2026-06-17,GENERAL,Pumpkin,Rs./kg,Pettah/Peliyagoda,Retail,130.0,130.0,130.0,0.0
+2026-06-16,GENERAL,Pumpkin,Rs./kg,Pettah/Peliyagoda,Wholesale,80.0,,80.0,
+2026-06-17,GENERAL,Pumpkin,Rs./kg,Pettah/Peliyagoda,Wholesale,80.0,80.0,80.0,0.0
+2026-06-16,GENERAL,Red Dhal,Rs./kg,Pettah/Peliyagoda,Retail,253.0,,253.0,
+2026-06-17,GENERAL,Red Dhal,Rs./kg,Pettah/Peliyagoda,Retail,253.0,253.0,253.0,0.0
+2026-06-16,GENERAL,Red Dhal,Rs./kg,Pettah/Peliyagoda,Wholesale,233.0,,233.0,
+2026-06-17,GENERAL,Red Dhal,Rs./kg,Pettah/Peliyagoda,Wholesale,233.0,233.0,233.0,0.0
+2026-06-16,GENERAL,Red Onion (Local),Rs./kg,Dambulla/Negombo,Retail,295.0,,295.0,
+2026-06-17,GENERAL,Red Onion (Local),Rs./kg,Dambulla/Negombo,Retail,295.0,295.0,295.0,0.0
+2026-06-16,GENERAL,Red Onion (Local),Rs./kg,Dambulla/Negombo,Wholesale,275.0,,275.0,
+2026-06-17,GENERAL,Red Onion (Local),Rs./kg,Dambulla/Negombo,Wholesale,275.0,275.0,275.0,0.0
+2026-06-16,GENERAL,Red Onion (Local),Rs./kg,Pettah/Peliyagoda,Wholesale,383.0,,383.0,
+2026-06-17,GENERAL,Red Onion (Local),Rs./kg,Pettah/Peliyagoda,Wholesale,380.0,383.0,381.5,-3.0
+2026-06-16,GENERAL,Red Onion (lmp),Rs./kg,Dambulla/Negombo,Retail,355.0,,355.0,
+2026-06-17,GENERAL,Red Onion (lmp),Rs./kg,Dambulla/Negombo,Retail,310.0,355.0,332.5,-45.0
+2026-06-16,GENERAL,Red Onion (lmp),Rs./kg,Dambulla/Negombo,Wholesale,335.0,,335.0,
+2026-06-17,GENERAL,Red Onion (lmp),Rs./kg,Dambulla/Negombo,Wholesale,290.0,335.0,312.5,-45.0
+2026-06-16,GENERAL,Red Onion (lmp),Rs./kg,Pettah/Peliyagoda,Retail,380.0,,380.0,
+2026-06-17,GENERAL,Red Onion (lmp),Rs./kg,Pettah/Peliyagoda,Retail,417.0,380.0,398.5,37.0
+2026-06-16,GENERAL,Red Onion (lmp),Rs./kg,Pettah/Peliyagoda,Wholesale,350.0,,350.0,
+2026-06-17,GENERAL,Red Onion (lmp),Rs./kg,Pettah/Peliyagoda,Wholesale,340.0,350.0,345.0,-10.0
+2026-06-16,GENERAL,Salaya,Rs./kg,Dambulla/Negombo,Retail,940.0,,940.0,
+2026-06-17,GENERAL,Salaya,Rs./kg,Dambulla/Negombo,Retail,850.0,940.0,895.0,-90.0
+2026-06-16,GENERAL,Salaya,Rs./kg,Dambulla/Negombo,Wholesale,820.0,,820.0,
+2026-06-17,GENERAL,Salaya,Rs./kg,Dambulla/Negombo,Wholesale,720.0,820.0,770.0,-100.0
+2026-06-16,GENERAL,Salaya,Rs./kg,Pettah/Peliyagoda,Wholesale,850.0,,850.0,
+2026-06-17,GENERAL,Salaya,Rs./kg,Pettah/Peliyagoda,Wholesale,700.0,850.0,775.0,-150.0
+2026-06-16,GENERAL,Samba,Rs./kg,Dambulla/Negombo,Retail,245.0,,245.0,
+2026-06-17,GENERAL,Samba,Rs./kg,Dambulla/Negombo,Retail,245.0,245.0,245.0,0.0
+2026-06-16,GENERAL,Samba,Rs./kg,Dambulla/Negombo,Wholesale,245.0,,245.0,
+2026-06-17,GENERAL,Samba,Rs./kg,Dambulla/Negombo,Wholesale,244.0,245.0,244.5,-1.0
+2026-06-16,GENERAL,Samba,Rs./kg,Pettah/Peliyagoda,Retail,250.0,,250.0,
+2026-06-17,GENERAL,Samba,Rs./kg,Pettah/Peliyagoda,Retail,250.0,250.0,250.0,0.0
+2026-06-16,GENERAL,Samba,Rs./kg,Pettah/Peliyagoda,Wholesale,245.0,,245.0,
+2026-06-17,GENERAL,Samba,Rs./kg,Pettah/Peliyagoda,Wholesale,245.0,245.0,245.0,0.0
+2026-06-16,GENERAL,Snake gourd,Rs./kg,Dambulla/Negombo,Retail,220.0,,220.0,
+2026-06-17,GENERAL,Snake gourd,Rs./kg,Dambulla/Negombo,Retail,205.0,220.0,212.5,-15.0
+2026-06-16,GENERAL,Snake gourd,Rs./kg,Dambulla/Negombo,Wholesale,190.0,,190.0,
+2026-06-17,GENERAL,Snake gourd,Rs./kg,Dambulla/Negombo,Wholesale,175.0,190.0,182.5,-15.0
+2026-06-16,GENERAL,Snake gourd,Rs./kg,Pettah/Peliyagoda,Retail,350.0,,350.0,
+2026-06-17,GENERAL,Snake gourd,Rs./kg,Pettah/Peliyagoda,Retail,300.0,350.0,325.0,-50.0
+2026-06-16,GENERAL,Snake gourd,Rs./kg,Pettah/Peliyagoda,Wholesale,300.0,,300.0,
+2026-06-17,GENERAL,Snake gourd,Rs./kg,Pettah/Peliyagoda,Wholesale,250.0,300.0,275.0,-50.0
+2026-06-16,GENERAL,Sprat (Imp),Rs./kg,Pettah/Peliyagoda,Retail,1317.0,,1317.0,
+2026-06-17,GENERAL,Sprat (Imp),Rs./kg,Pettah/Peliyagoda,Retail,1383.0,1317.0,1350.0,66.0
+2026-06-16,GENERAL,Sprat (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,1038.0,,1038.0,
+2026-06-17,GENERAL,Sprat (Imp),Rs./kg,Pettah/Peliyagoda,Wholesale,1050.0,1038.0,1044.0,12.0
+2026-06-16,GENERAL,Sugar (White),Rs./kg,Pettah/Peliyagoda,Retail,227.0,,227.0,
+2026-06-17,GENERAL,Sugar (White),Rs./kg,Pettah/Peliyagoda,Retail,227.0,227.0,227.0,0.0
+2026-06-16,GENERAL,Sugar (White),Rs./kg,Pettah/Peliyagoda,Wholesale,205.0,,205.0,
+2026-06-17,GENERAL,Sugar (White),Rs./kg,Pettah/Peliyagoda,Wholesale,208.0,205.0,206.5,3.0
+2026-06-16,GENERAL,Thalapath,Rs./kg,Dambulla/Negombo,Retail,2770.0,,2770.0,
+2026-06-17,GENERAL,Thalapath,Rs./kg,Dambulla/Negombo,Retail,2770.0,2770.0,2770.0,0.0
+2026-06-16,GENERAL,Thalapath,Rs./kg,Dambulla/Negombo,Wholesale,2050.0,,2050.0,
+2026-06-17,GENERAL,Thalapath,Rs./kg,Dambulla/Negombo,Wholesale,2050.0,2050.0,2050.0,0.0
+2026-06-16,GENERAL,Tomato,Rs./kg,Dambulla/Negombo,Retail,630.0,,630.0,
+2026-06-17,GENERAL,Tomato,Rs./kg,Dambulla/Negombo,Retail,630.0,630.0,630.0,0.0
+2026-06-16,GENERAL,Tomato,Rs./kg,Dambulla/Negombo,Wholesale,600.0,,600.0,
+2026-06-17,GENERAL,Tomato,Rs./kg,Dambulla/Negombo,Wholesale,600.0,600.0,600.0,0.0
+2026-06-16,GENERAL,Tomato,Rs./kg,Pettah/Peliyagoda,Retail,800.0,,800.0,
+2026-06-17,GENERAL,Tomato,Rs./kg,Pettah/Peliyagoda,Retail,800.0,800.0,800.0,0.0
+2026-06-16,GENERAL,Tomato,Rs./kg,Pettah/Peliyagoda,Wholesale,750.0,,750.0,
+2026-06-17,GENERAL,Tomato,Rs./kg,Pettah/Peliyagoda,Wholesale,750.0,750.0,750.0,0.0

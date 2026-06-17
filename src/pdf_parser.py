@@ -7,72 +7,47 @@ import os
 
 def parse_cbsl_pdf(pdf_path):
     """
-    Extract the price table from CBSL PDF (page 2) and return a cleaned DataFrame.
-    The table has a complex multi-level header.
-    We'll extract using camelot with lattice flavor.
+    Extract the full price table from CBSL PDF (page 2) using stream flavor
+    and extract the true report date directly from the filename structure.
     """
-
-    # Read table from page 2
-    tables = camelot.read_pdf(pdf_path, pages='2', flavor='lattice')
+    tables = camelot.read_pdf(pdf_path, pages='2', flavor='stream')
     if not tables:
         raise Exception("No tables found in PDF page 2.")
 
-    df = tables[0].df # Extract as pandas DataFrame of strings
+    df = tables[0].df
 
-    # Clean: drop first two rows (header info) and last empty rows if any
-    df = df.iloc[2:].reset_index(drop=True)
-
-    # The first column is the item name, second is unit, etc.
-    # We need to map columns to proper names.
-    # Based on the example, the columns order (after dropping header rows):
-    # Col0: Item
-    # Col1: Unit
-    # Col2-5: Wholesale Petah Yesterday/Today, Wholesale Dambulla Yesterday/Today
-    # Col6-9: Retail Petah Yesterday/Today, Retail Dambulla Yesterday/Today
-    # ... but the PDF has more columns for other items (Fish, Rice, Fruits) with varying market columns.
-    # To keep it simple, we'll parse the table as is and then restructure.
-    
-    # Let's take the first 10 columns which correspond to vegetables (the main part)
-    # But we want all items. The PDF has many columns. We'll rename columns generically.
-    
-    # For simplicity, we extract the entire table and then manually assign column names
-    # based on the header rows we dropped.
-    # A more robust approach: extract the header from row 1 and 2, but we'll hardcode column names
-    # for known structure: 
-    # Columns: Item, Unit, 
-    # Petah Wholesale Yesterday, Petah Wholesale Today,
-    # Dambulla Wholesale Yesterday, Dambulla Wholesale Today,
-    # Petah Retail Yesterday, Petah Retail Today,
-    # Dambulla Retail Yesterday, Dambulla Retail Today,
-    # then additional columns for other items (coconut, rice, fish) with their own markets.
-    # To keep it generic, we'll output all columns with generic names.
-    
-    # For simplicity, we'll just rename columns as 'col_0', 'col_1', ...
-    # Then we'll reshape into long format.
-
+    # Force generic column names to prevent multi-level header mismatches
     df.columns = [f'col_{i}' for i in range(df.shape[1])]
     
-    # Add a date column based in today's date 
-    report_date = datetime.now().strftime("%Y-%m-%d")
+    # FIX: Parse the true publication date from the filename (e.g., price_report_20260617.pdf)
+    filename = os.path.basename(pdf_path)
+    date_match = re.search(r'price_report_(\d{8})', filename)
+    
+    if date_match:
+        raw_date_str = date_match.group(1)
+        # Reformat from YYYYMMDD to YYYY-MM-DD
+        report_date = datetime.strptime(raw_date_str, "%Y%m%d").strftime("%Y-%m-%d")
+    else:
+        # Fallback if filename structure changes
+        report_date = datetime.now().strftime("%Y-%m-%d")
+        logging.warning(f"Could not extract date from filename '{filename}'. Falling back to system date.")
+        
     df['report_date'] = report_date
-
-    # Later reshape to long format (item, unit, market, price_type, price)
     return df
 
 def parse_pdf_to_csv(pdf_path, output_csv):
     df = parse_cbsl_pdf(pdf_path)
-    # Append to master CSV (if exist)
 
-    if os.path.exists(output_csv):
+    # Check if file exists and is not empty
+    if os.path.exists(output_csv) and os.path.getsize(output_csv) > 0:
         master = pd.read_csv(output_csv)
         # Avoid duplicates: check if same date already present
         if not master[master['report_date'] == df['report_date'].iloc[0]].empty:
-            logging.info(f"Data for {df['report_date'].iloc[0]} already exists. Skipping.")
+            logging.info(f"Data for {df['report_date'].iloc[0]} already exists in raw CSV. Skipping.")
             return
         master = pd.concat([master, df], ignore_index=True)
-
     else:
         master = df
 
     master.to_csv(output_csv, index=False)
-    logging.info(f"Append data to {output_csv}")
+    logging.info(f"Appended raw data to {output_csv}")
