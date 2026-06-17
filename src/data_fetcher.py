@@ -49,7 +49,7 @@ def fetch_today_pdf():
     today_str = datetime.now().strftime("%Y%m%d")
     save_path = os.path.join(PDF_DIR, f"price_report_{today_str}.pdf")
 
-    if os,path.exists(save_path):
+    if os.path.exists(save_path):
         logging.info(f"PDF already exists: {save_path}")
     else:
         logging.info(f"Downloading PDF from {pdf_url}")
