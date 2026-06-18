@@ -20,16 +20,21 @@ load_dotenv()
 #---------------------
 def load_data(state: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Reads the historical crop ledger file and filters rows for the requested crop.
+    Reads the historical crop ledger file and filters rows for the 
+    requested crop, specific market, and pricing channel type.
     """
     crop = state.get("crop")
+    # Get the market and price type from state, or default to Pettah Wholesale if missing
+    market = state.get("market", "Pettah/Peliyagoda")
+    price_type = state.get("price_type", "Wholesale")
+
     if not crop:
         state["error"] = "No crop item was specified."
         return state
 
-    # points csv_path to the master ledger csv_path
+    # Points directly to your true data pipeline master ledger path
     csv_path = "data/processed/crop_history.csv"
-
+    
     try:
         if not os.path.exists(csv_path):
             state["error"] = f"Database file not found at: {csv_path}"
@@ -37,29 +42,31 @@ def load_data(state: Dict[str, Any]) -> Dict[str, Any]:
 
         df = pd.read_csv(csv_path)
         df['date'] = pd.to_datetime(df['date'])
-
-        # Filter rows where the 'item' matches choosen crop name
-        df = df[df['item'].str.lower() == crop.lower()].copy()
-
+        
+        # FIX: Filter rows by match-matching item, market, and price type together
+        df = df[
+            (df['item'].str.lower() == crop.lower()) & 
+            (df['market'].str.lower() == market.lower()) & 
+            (df['price_type'].str.lower() == price_type.lower())
+        ].copy()
+        
         if df.empty:
-            state["error"] = f"No historical data records found for: {crop}"
+            state["error"] = f"No data found for {crop} at {market} ({price_type})"
             return state
-
-        # Sort sequencially by date and keep the latest 30 rows
+            
+        # Sort sequentially by date and keep the latest 30 rows for this market stream
         df.sort_values('date', inplace=True)
         df = df.tail(30).reset_index(drop=True)
-
+        
         state["historical_data"] = df
         state["error"] = None
-        logging.info(f"Loaded {len(df)} price rows for crop: {crop}")
-
+        logging.info(f"Loaded {len(df)} rows for {crop} at {market} ({price_type})")
+        
     except Exception as e:
         state["error"] = f"Data loader failed: {str(e)}"
         logging.error(state["error"])
-
+        
     return state
-
-
 #------------------------
 # Agent 2: Trend Analyzer
 #------------------------
@@ -82,7 +89,7 @@ def analyze_trend(state: Dict[str, Any]) -> Dict[str, Any]:
     daily_change = latest_row.get('daily_change', 0)
 
     # Get a plain list of the last 7 sequencial prices
-    recent_prices = df['prices'].tail(7).tolist()
+    recent_prices = df['price'].tail(7).tolist()
 
     # Determine trend status direction
     if daily_change > 0:
@@ -115,7 +122,7 @@ def predict_price(state: Dict[str, Any]) -> Dict[str, Any]:
     """
 
     crop = state.get("crop")
-    recent_prices = state.get["recent_prices", []]
+    recent_prices = state.get("recent_prices", [])
     week_avg = state.get("week_avg", 0)
     fallback_baseline = state.get("current_price", 0)
 

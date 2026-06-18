@@ -2,8 +2,6 @@
 Assemble the LangGraph multi-agent workflow.
 Manages state memory and pipeline routing paths.
 """
-from _typeshed import AnnotateFunc
-from json import load
 
 from langgraph.graph import StateGraph, END
 from typing import TypedDict, Optional, List, Dict, Any
@@ -13,6 +11,8 @@ from .agents import load_data, analyze_trend, predict_price
 # Define the shared memory graph state schema
 class PredictionState(TypedDict):
     crop: str
+    market: str
+    price_type: str
     historical_data: Optional[pd.DataFrame]
     current_price: Optional[float]
     yesterday_price: Optional[float]
@@ -74,7 +74,7 @@ def build_workflow():
 
 
 # App Execution Wrapper Function
-def predict_crop_price(crop: str) -> Dict[str, Any]:
+def predict_crop_price(crop: str, market: str = "Pettah/Peliyagoda", price_type: str = "Wholesale") -> Dict[str, Any]:
     """
     Run the full compiled workflow for a given crop and return the final state dictionary.
     """
@@ -82,6 +82,8 @@ def predict_crop_price(crop: str) -> Dict[str, Any]:
 
     initial_state: PredictionState = {
         "crop": crop,
+        "market": market,
+        "price_type": price_type,
         "historical_data": None,
         "current_price": None,
         "yesterday_price": None,
