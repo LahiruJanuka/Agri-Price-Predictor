@@ -20,6 +20,8 @@ class PredictionState(TypedDict):
     daily_change: Optional[float]
     trend: Optional[str]
     recent_prices: Optional[List[float]]
+    seven_day_change_pct: float
+    ma_deviation_pct: float
     prediction: Optional[float]
     recommendation: Optional[str]
     error: Optional[str]
@@ -91,6 +93,8 @@ def predict_crop_price(crop: str, market: str = "Pettah/Peliyagoda", price_type:
         "daily_change": None,
         "trend": None,
         "recent_prices": None,
+        "seven_day_change_pct": 0,
+        "ma_deviation_pct": 0,
         "prediction": None,
         "recommendation": None,
         "error": None

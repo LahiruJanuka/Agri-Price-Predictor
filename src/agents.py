@@ -5,6 +5,7 @@ Uses LangChain Groq to connect to high-speed cloud LLMs.
 
 import os
 import pandas as pd
+import numpy as np
 import logging
 from typing import TypedDict, Any, Dict
 from dotenv import load_dotenv
@@ -67,50 +68,73 @@ def load_data(state: Dict[str, Any]) -> Dict[str, Any]:
         logging.error(state["error"])
         
     return state
+
 #------------------------
 # Agent 2: Trend Analyzer
 #------------------------
 
 def analyze_trend(state: Dict[str, Any]) -> Dict[str, Any]:
     """
-    Extracts the latest metrics from out data table to build mathematical context
+    Extracts moving averages, directional momentum, and statistical trend indicators
+    from historical data to provide grounded math contexts for the LLM.
     """
     df = state.get("historical_data")
-    if df is None or df.empty:
-        state["error"] = "No history dataframe found to analyze"
+    if df is None or df.empty or len(df) < 2:
+        state["error"] = "Insufficient historical data points to execute mathematical trend analysis"
+        state["trend"] = "unknown"
         return state
 
-    # Grab the very last row (recent market day)
-    latest_row = df.iloc[-1]
+    # 1. Ensure chronological order (Crucial for time-series parsing)
+    df = df.sort_values(by="date").copy()
+
+    # 2. Extract price arrays and verify sizing
+    prices = df['price'].astype(float).tolist()
+    recent_prices = prices[-7:]  # Capture last 7 data entries for UI tracking
     
-    current_price = float(latest_row['price'])
-    yesterday_price = latest_row.get('yesterday_price', current_price)
-    week_avg = latest_row.get('week_avg', current_price)
-    daily_change = latest_row.get('daily_change', 0)
+    current_price = prices[-1]
+    yesterday_price = prices[-2]
+    daily_change = current_price - yesterday_price
 
-    # Get a plain list of the last 7 sequencial prices
-    recent_prices = df['price'].tail(7).tolist()
+    # 7-day Simple Moving Average (SMA) handles noise dampening
+    window_7d = prices[-7:]
+    week_avg = float(np.mean(window_7d))
+    
+    # 7-Day Momentum: How much did the price move compared to 7 market days ago?
+    historical_reference_idx = -7 if len(prices) >= 7 else -len(prices)
+    price_7_days_ago = prices[historical_reference_idx]
+    seven_day_change_pct = ((current_price - price_7_days_ago) / price_7_days_ago) * 100
 
-    # Determine trend status direction
-    if daily_change > 0:
+    # 4. Introduce a Dynamic Stability Threshold (Noise Gate)
+    # Agricultural commodities bounce around daily. If a movement is under 2%, 
+    NOISE_THRESHOLD_PCT = 2.0 
+
+    if seven_day_change_pct > NOISE_THRESHOLD_PCT:
         trend = "upward"
-    elif daily_change < 0:
+    elif seven_day_change_pct < -NOISE_THRESHOLD_PCT:
         trend = "downward"
     else:
         trend = "stable"
 
-    # Save calculated trend metrics back to the shared graph state dictionary
+    # 5. Advanced Signal: Position Relative to Moving Average
+    # Is the price accelerating above average or breaking down below average?
+    ma_deviation_pct = ((current_price - week_avg) / week_avg) * 100
+
+    # 6. Hydrate the Graph State Context Dictionary
     state["current_price"] = current_price
     state["yesterday_price"] = yesterday_price
     state["week_avg"] = week_avg
     state["daily_change"] = daily_change
+    state["seven_day_change_pct"] = round(seven_day_change_pct, 2)
+    state["ma_deviation_pct"] = round(ma_deviation_pct, 2)
     state["trend"] = trend
     state["recent_prices"] = recent_prices
     state["error"] = None
 
-    logging.info(f"Analyzed {state['crop']}: price={current_price}, Trend={trend}")
+    logging.info(
+        f"📊 Logic Engine [{state.get('crop', 'Crop')}]: "
+        f"Price={current_price} LKR | 7D-Move={seven_day_change_pct:.1f}% | Trend={trend.upper()}"
+    )
     return state
-
 
 #-------------------
 # Agent 3: Predictor
@@ -125,7 +149,10 @@ def predict_price(state: Dict[str, Any]) -> Dict[str, Any]:
     recent_prices = state.get("recent_prices", [])
     week_avg = state.get("week_avg", 0)
     fallback_baseline = state.get("current_price", 0)
-
+    seven_day_change = state.get("seven_day_change_pct", 0.0)
+    ma_deviation = state.get("ma_deviation_pct", 0.0)
+    trend = state.get("trend", "stable")
+    
     if not recent_prices:
         state["error"] = "No recent price data available for prediction."
         state["prediction"] = fallback_baseline
@@ -139,7 +166,10 @@ def predict_price(state: Dict[str, Any]) -> Dict[str, Any]:
     prompt_message = PRICE_PREDICTION_PROMPT.format(
         crop = crop,
         price_history = price_history_text,
-        week_avg = float(week_avg)
+        week_avg = float(week_avg),
+        seven_day_change=float(seven_day_change),
+        ma_deviation=float(ma_deviation),
+        trend=trend.upper()
     )
 
     try:
@@ -148,7 +178,7 @@ def predict_price(state: Dict[str, Any]) -> Dict[str, Any]:
             raise ValueError("GROQ_API_KEY is missing from environment. Check your .env file.")
 
         # Initialize ChatGroq
-        llm = ChatGroq(model="openai/gpt-oss-120b", temperature=0.2)
+        llm = ChatGroq(model="openai/gpt-oss-120b", temperature=0.1)
         
         # Invoke the cloud model
         response = llm.invoke(prompt_message)
