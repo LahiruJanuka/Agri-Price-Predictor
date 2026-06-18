@@ -31,7 +31,7 @@ jobs:
 
       # 4. Run python scraping pipeline orchestration script
       - name: Run Data Pipeline
-        run: python src/data_pipeline.py
+        run: python -m src.data_pipeline
 
       # 5. Automatically commit and push the updated CSV back into your repository
       - name: Commit and Push Updated Data Ledger
