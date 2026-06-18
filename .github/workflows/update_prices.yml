@@ -1,0 +1,51 @@
+name: Daily CBSL Price Scraper & Sync
+
+on:
+  schedule:
+    # Runs daily at 11:30 UTC (5:00 PM Sri Lanka Time)
+    # This executes right after CBSL typically publishes their daily reports
+    - cron: '30 11 * * *'
+  workflow_dispatch: # Allows manually trigger it from GitHub anytime for testing
+
+jobs:
+  scrape-and-update:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Pull down your repository files onto the GitHub runner
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      # 2. Set up a secure Python environment
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip' # Speeds up execution by caching installed libraries
+
+      # 3. Install required libraries from root requirements file
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+
+      # 4. Run python scraping pipeline orchestration script
+      - name: Run Data Pipeline
+        run: python src/data_pipeline.py
+
+      # 5. Automatically commit and push the updated CSV back into your repository
+      - name: Commit and Push Updated Data Ledger
+        run: |
+          git config --global user.name "GoviBot [GitHub Action]"
+          git config --global user.email "govibot@users.noreply.github.com"
+          
+          # Only stage the specific data ledger to keep commits clean
+          git add data/processed/crop_history.csv
+          
+          # Check if there are actual updates to avoid empty build errors
+          if git diff --staged --quiet; then
+            echo "No new price updates found for today. Skipping commit."
+          else
+            git commit -m "Automated Sync: Updated Daily CBSL Ledger [skip ci]"
+            git push
+          fi
