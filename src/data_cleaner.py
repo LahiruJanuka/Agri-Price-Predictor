@@ -11,7 +11,27 @@ import os
 from .utils import ensure_dir, setup_logging
 
 
-def clean_raw_data(raw_df):
+def get_previous_market_date(report_date_str, sorted_market_days):
+    """
+    Finds the true previous market day by locating the report_date
+    inside the sorted timeline of operational bank days.
+    """
+    if sorted_market_days and report_date_str in sorted_market_days:
+        idx = sorted_market_days.index(report_date_str)
+        if idx > 0:
+            return datetime.strptime(sorted_market_days[idx - 1], "%Y-%m-%d")
+            
+    # Fallback calendar logic if it is the absolute first day in the dataset
+    report_date = datetime.strptime(report_date_str, "%Y-%m-%d")
+    if report_date.weekday() == 0:    # Monday -> Go back to Friday
+        return report_date - timedelta(days=3)
+    elif report_date.weekday() == 6:  # Sunday -> Go back to Friday
+        return report_date - timedelta(days=2)
+    else:
+        return report_date - timedelta(days=1)
+
+
+def clean_raw_data(raw_df, sorted_market_days=None):
     """
     Goes through the raw CSV row by row, looks at each market column,
     and reorganizes the layout into individual rows for each price record.
@@ -83,8 +103,8 @@ def clean_raw_data(raw_df):
             if mapping["is_today"] == True:
                 target_date = report_date
             else:
-                # Subtract 1 day if this column belongs to yesterday's data
-                target_date = report_date - timedelta(days=1)
+                # MODIFIED: Dynamically extract preceding operational market date from sorted timeline
+                target_date = get_previous_market_date(str(report_date_str).strip(), sorted_market_days)
 
             # Build a simple dictionary record for this price data point
             records.append({
@@ -142,8 +162,22 @@ def run_data_cleaning_pipeline(raw_csv_path, output_csv_path):
         
     raw_df = pd.read_csv(raw_csv_path)
     
+    # MODIFIED: Construct unique business day tracking ledger to trace holiday voids safely
+    all_market_days = set()
+    if os.path.exists(output_csv_path) and os.path.getsize(output_csv_path) > 0:
+        try:
+            df_old = pd.read_csv(output_csv_path)
+            if 'date' in df_old.columns:
+                all_market_days.update(pd.to_datetime(df_old['date']).dt.strftime('%Y-%m-%d').dropna().unique())
+        except Exception as e:
+            logging.error(f"Error reading historical dates: {e}")
+            
+    if 'report_date' in raw_df.columns:
+        all_market_days.update(pd.to_datetime(raw_df['report_date']).dt.strftime('%Y-%m-%d').dropna().unique())
+    sorted_market_days = sorted(list(all_market_days))
+
     # Clean and unpack the columns from the raw scraper data
-    new_data = clean_raw_data(raw_df)
+    new_data = clean_raw_data(raw_df, sorted_market_days=sorted_market_days)
     if new_data.empty:
         logging.warning("No new data was found to clean.")
         return None
