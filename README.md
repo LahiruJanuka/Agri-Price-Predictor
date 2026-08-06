@@ -2,7 +2,7 @@
 
 AI-powered crop price forecasting and market insights platform for Sri Lankan agricultural markets.
 
-**Live Demo:** https://govi-gnana.streamlit.app/
+**Live Demo:** https://agri-price-predictor.streamlit.app/
 
 ---
 
