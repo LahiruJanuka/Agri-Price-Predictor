@@ -4,6 +4,9 @@ import plotly.express as px
 from datetime import datetime
 import os
 from src.workflow import predict_crop_price
+from src.db import bootstrap_for_app
+
+bootstrap_for_app()
 
 # ----------------------------------------------------------------------
 # Page Configurations & Theme Setting
