@@ -11,15 +11,82 @@ import os
 from .utils import ensure_dir, setup_logging
 
 
+KNOWN_CATEGORIES = ['VEGETABLES', 'OTHER', 'FRUITS', 'RICE', 'FISH']
+
+
+def get_column_matrix(category):
+    """
+    Returns the market column mapping matching CBSL Daily Price Report layout.
+    - VEGETABLES / OTHER / FRUITS:
+        Wholesale: Pettah (cols 2,3), Dambulla (cols 4,5)
+        Retail: Pettah (cols 6,7), Dambulla (cols 8,9), Narahenpita (cols 10,11)
+    - RICE:
+        Wholesale: Pettah (cols 2,3), Marandagahamula (cols 4,5)
+        Retail: Pettah (cols 6,7), Dambulla (cols 8,9), Narahenpita (cols 10,11)
+    - FISH:
+        Wholesale: Peliyagoda (cols 2,3), Negombo (cols 4,5)
+        Retail: Negombo (cols 8,9), Narahenpita (cols 10,11)
+    """
+    cat = category.upper()
+    if cat == "FISH":
+        return [
+            {"col_idx": 2, "market": "Peliyagoda", "price_type": "Wholesale", "is_today": False},
+            {"col_idx": 3, "market": "Peliyagoda", "price_type": "Wholesale", "is_today": True},
+            {"col_idx": 4, "market": "Negombo",    "price_type": "Wholesale", "is_today": False},
+            {"col_idx": 5, "market": "Negombo",    "price_type": "Wholesale", "is_today": True},
+            {"col_idx": 8, "market": "Negombo",    "price_type": "Retail",    "is_today": False},
+            {"col_idx": 9, "market": "Negombo",    "price_type": "Retail",    "is_today": True},
+            {"col_idx": 10, "market": "Narahenpita", "price_type": "Retail",   "is_today": False},
+            {"col_idx": 11, "market": "Narahenpita", "price_type": "Retail",   "is_today": True},
+        ]
+    elif cat == "RICE":
+        return [
+            {"col_idx": 2, "market": "Pettah",          "price_type": "Wholesale", "is_today": False},
+            {"col_idx": 3, "market": "Pettah",          "price_type": "Wholesale", "is_today": True},
+            {"col_idx": 4, "market": "Marandagahamula", "price_type": "Wholesale", "is_today": False},
+            {"col_idx": 5, "market": "Marandagahamula", "price_type": "Wholesale", "is_today": True},
+            {"col_idx": 6, "market": "Pettah",          "price_type": "Retail",    "is_today": False},
+            {"col_idx": 7, "market": "Pettah",          "price_type": "Retail",    "is_today": True},
+            {"col_idx": 8, "market": "Dambulla",        "price_type": "Retail",    "is_today": False},
+            {"col_idx": 9, "market": "Dambulla",        "price_type": "Retail",    "is_today": True},
+            {"col_idx": 10, "market": "Narahenpita",    "price_type": "Retail",    "is_today": False},
+            {"col_idx": 11, "market": "Narahenpita",    "price_type": "Retail",    "is_today": True},
+        ]
+    else:  # VEGETABLES, OTHER, FRUITS, and general commodities
+        return [
+            {"col_idx": 2, "market": "Pettah",      "price_type": "Wholesale", "is_today": False},
+            {"col_idx": 3, "market": "Pettah",      "price_type": "Wholesale", "is_today": True},
+            {"col_idx": 4, "market": "Dambulla",    "price_type": "Wholesale", "is_today": False},
+            {"col_idx": 5, "market": "Dambulla",    "price_type": "Wholesale", "is_today": True},
+            {"col_idx": 6, "market": "Pettah",      "price_type": "Retail",    "is_today": False},
+            {"col_idx": 7, "market": "Pettah",      "price_type": "Retail",    "is_today": True},
+            {"col_idx": 8, "market": "Dambulla",    "price_type": "Retail",    "is_today": False},
+            {"col_idx": 9, "market": "Dambulla",    "price_type": "Retail",    "is_today": True},
+            {"col_idx": 10, "market": "Narahenpita","price_type": "Retail",    "is_today": False},
+            {"col_idx": 11, "market": "Narahenpita","price_type": "Retail",    "is_today": True},
+        ]
+
+
 def clean_raw_data(raw_df):
     """
     Goes through the raw CSV row by row, looks at each market column,
     and reorganizes the layout into individual rows for each price record.
+    Preserves exact individual markets (Pettah, Dambulla, Narahenpita, Peliyagoda,
+    Negombo, Marandagahamula) per the CBSL reports.
     """
     records = []
-    current_category = "GENERAL"  # Starts with a default food category
+    current_category = "GENERAL"
 
     for idx, row in raw_df.iterrows():
+        # Detect category header anywhere across row cells
+        for val in row.values:
+            if pd.notna(val):
+                compact = "".join(str(val).split()).upper()
+                if compact in KNOWN_CATEGORIES:
+                    current_category = compact
+                    logging.info(f"Changed tracking category to: {current_category}")
+                    break
+
         # Get item name, units, and report date from the row
         item = str(row.iloc[0]).strip() if pd.notna(row.iloc[0]) else ""
         unit = str(row.iloc[1]).strip() if pd.notna(row.iloc[1]) else ""
@@ -30,63 +97,41 @@ def clean_raw_data(raw_df):
             continue
 
         try:
-            # Convert text date to a real Python datetime object
             report_date = datetime.strptime(str(report_date_str), "%Y-%m-%d")
         except ValueError:
             continue
 
-        # Skip rows that are just empty text or basic column names
-        if item.lower() in ['item', 'unit', 'nan', ''] and not unit:
+        # Commodity data rows must have valid item name and valid unit (e.g. Rs./kg)
+        if not item or item.lower() in ['item', 'unit', 'nan', ''] or item.startswith('n.a.'):
+            continue
+        if not unit or unit.lower() in ['nan', ''] or not unit.lower().startswith('rs.'):
             continue
 
-        # CATEGORY DETECTOR: If item has text but unit is completely empty,
-        # it means we hit a section title row (like "VEGETABLES" or "FRUITS")
-        if item and (not unit or unit.lower() in ['nan', '']):
-            # Make sure it isn't a random header row text
-            if not any(header in item.lower() for header in ['price', 'wholesale', 'retail', 'selected']):
-                current_category = item.upper().replace(" ", "")
-                logging.info(f"Changed tracking category to: {current_category}")
-            continue
+        # Get category-specific column matrix
+        column_matrix = get_column_matrix(current_category)
 
-        # COLUMN INDEX DICTIONARY LIST
-        # Tells the computer exactly which column index represents what market information
-        column_matrix = [
-            {"col_idx": 2, "market": "Pettah/Peliyagoda", "price_type": "Wholesale", "is_today": False}, # Yesterday Price
-            {"col_idx": 3, "market": "Pettah/Peliyagoda", "price_type": "Wholesale", "is_today": True},  # Today Price
-            {"col_idx": 4, "market": "Dambulla/Negombo",  "price_type": "Wholesale", "is_today": False}, # Yesterday Price
-            {"col_idx": 5, "market": "Dambulla/Negombo",  "price_type": "Wholesale", "is_today": True},  # Today Price
-            {"col_idx": 6, "market": "Pettah/Peliyagoda", "price_type": "Retail",    "is_today": False}, # Yesterday Price
-            {"col_idx": 7, "market": "Pettah/Peliyagoda", "price_type": "Retail",    "is_today": True},  # Today Price
-            {"col_idx": 8, "market": "Dambulla/Negombo",  "price_type": "Retail",    "is_today": False}, # Yesterday Price
-            {"col_idx": 9, "market": "Dambulla/Negombo",  "price_type": "Retail",    "is_today": True}   # Today Price
-        ]
-
-        # Extract price from each column specified in the list above
+        # Extract price from each column specified in the matrix
         for mapping in column_matrix:
-            # Avoid crashes if the row somehow has fewer columns than expected
             if mapping["col_idx"] >= len(row):
                 continue
 
             raw_val = str(row.iloc[mapping["col_idx"]]).strip().lower()
             
-            # Skip empty entries or "N.A." labels safely
-            if raw_val in ['n.a.', 'na', '', 'nan']:
+            # Skip empty entries, dots, or "n.a." labels safely
+            if raw_val in ['n.a.', 'na', '', 'nan', 'none', '.']:
                 continue
 
             try:
-                # Remove any commas from text numbers and turn into a float decimal
                 price_float = float(raw_val.replace(',', ''))
             except ValueError:
                 continue
 
             # Assign the correct date to the entry
-            if mapping["is_today"] == True:
+            if mapping["is_today"]:
                 target_date = report_date
             else:
-                # Subtract 1 day if this column belongs to yesterday's data
                 target_date = report_date - timedelta(days=1)
 
-            # Build a simple dictionary record for this price data point
             records.append({
                 'date': target_date.strftime("%Y-%m-%d"),
                 'category': current_category,
@@ -97,10 +142,8 @@ def clean_raw_data(raw_df):
                 'price': price_float
             })
 
-    # Convert our list of dictionaries into a clean structured table
     long_df = pd.DataFrame(records)
     if not long_df.empty:
-        # Drop identical duplicate entries to keep data honest
         long_df.drop_duplicates(subset=['date', 'item', 'market', 'price_type'], inplace=True)
         long_df['date'] = pd.to_datetime(long_df['date'])
         
@@ -153,6 +196,10 @@ def run_data_cleaning_pipeline(raw_csv_path, output_csv_path):
         logging.info("History file found. Merging data fields...")
         old_history = pd.read_csv(output_csv_path)
         old_history['date'] = pd.to_datetime(old_history['date'])
+        
+        # Prune legacy combined market names if present
+        if 'market' in old_history.columns:
+            old_history = old_history[~old_history['market'].str.contains('/', na=False)]
         
         # Look at the list of dates we just extracted today
         incoming_dates = new_data['date'].unique()
