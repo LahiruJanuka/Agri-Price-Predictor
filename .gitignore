@@ -4,3 +4,18 @@ __pycache__/
 data/raw_pdfs/
 .env
 .venv-win
+
+# Data artifacts — stored in Azure Blob, not Git
+data/
+*.db
+*.sqlite
+*.sqlite3
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite-wal
+*.sqlite-shm
+*.sqlite-journal
+
+docs
+.agents
