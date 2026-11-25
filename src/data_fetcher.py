@@ -20,8 +20,6 @@ from bs4 import BeautifulSoup
 
 from .utils import ensure_dir
 
-# ── Configuration ─────────────────────────────────────────────────────────────
-
 CBSL_LISTING_URL = "https://www.cbsl.gov.lk/en/statistics/economic-indicators/price-report"
 CBSL_PDF_BASE_URL = (
     "https://www.cbsl.gov.lk/sites/default/files/cbslweb_documents/"
@@ -38,8 +36,6 @@ HEADERS = {
         "+https://github.com/agri_price_predictor)"
     )
 }
-
-# ── PDF helpers ───────────────────────────────────────────────────────────────
 
 def _date_to_url(report_date: date) -> str:
     """Build the candidate PDF URL for *report_date* using the observed convention."""
@@ -73,8 +69,6 @@ def _save_pdf(content: bytes, date_str: str) -> str:
         fh.write(content)
     return path
 
-
-# ── Primary strategy: date-based URL discovery ────────────────────────────────
 
 def _try_date_url(report_date: date) -> str | None:
     """
@@ -150,8 +144,7 @@ def _fetch_by_date(max_lookback: int = MAX_LOOKBACK_DAYS) -> str:
     )
 
 
-# ── Fallback strategy: HTML scraping ─────────────────────────────────────────
-
+# Fallback strategy: HTML scraping
 def get_latest_pdf_url() -> str:
     """Scrape the CBSL listing page and return the URL of the latest PDF."""
     resp = requests.get(CBSL_LISTING_URL, headers=HEADERS, timeout=REQUEST_TIMEOUT)
@@ -210,8 +203,6 @@ def _fetch_by_html() -> str:
     logging.info("[html-fallback] Saved PDF → %s", save_path)
     return save_path
 
-
-# ── Public entry point ────────────────────────────────────────────────────────
 
 def fetch_today_pdf(max_lookback: int = MAX_LOOKBACK_DAYS) -> str:
     """

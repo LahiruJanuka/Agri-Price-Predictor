@@ -14,8 +14,6 @@ from datetime import datetime
 from unittest.mock import patch, MagicMock
 
 
-# ── Helpers ───────────────────────────────────────────────────────────────────
-
 def _make_raw_df(label_row, date_row, extra_rows=None):
     """
     Build a minimal camelot-style raw DataFrame that mimics the CBSL PDF layout.
@@ -32,10 +30,7 @@ def _make_raw_df(label_row, date_row, extra_rows=None):
     return df
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # 1. _parse_date_string
-# ═══════════════════════════════════════════════════════════════════════════════
-
 class TestParseDateString:
     def setup_method(self):
         from src.pdf_parser import _parse_date_string
@@ -70,10 +65,7 @@ class TestParseDateString:
         assert self.parse("99.13.2026") is None
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # 2. extract_report_dates — normal consecutive dates
-# ═══════════════════════════════════════════════════════════════════════════════
-
 class TestExtractReportDates:
     def setup_method(self):
         from src.pdf_parser import extract_report_dates
@@ -165,10 +157,7 @@ class TestExtractReportDates:
         assert prev == "2026-11-20"   # most recent of the two
 
 
-# ═══════════════════════════════════════════════════════════════════════════════
 # 3. data_cleaner.clean_raw_data — prices associated with correct dates
-# ═══════════════════════════════════════════════════════════════════════════════
-
 def _make_cleaner_df(report_date: str, prev_date, item_rows: list[dict]) -> pd.DataFrame:
     """
     Build a minimal raw DataFrame as data_cleaner.clean_raw_data expects:

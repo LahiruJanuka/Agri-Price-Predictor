@@ -20,7 +20,7 @@ from datetime import datetime
 import os
 
 
-# ── Date extraction helpers ───────────────────────────────────────────────────
+# Date extraction helpers
 
 _DATE_PATTERNS = [
     r"\b(\d{2})\.(\d{2})\.(\d{4})\b",   # DD.MM.YYYY  (primary CBSL format)
@@ -109,8 +109,7 @@ def extract_report_dates(df: pd.DataFrame, filename_date: str) -> tuple[str, str
     return filename_date, prev_date_str
 
 
-# ── Public API ────────────────────────────────────────────────────────────────
-
+# Public API
 def parse_cbsl_pdf(pdf_path: str) -> pd.DataFrame:
     """
     Extract the full price table from CBSL PDF (page 2) using stream flavour.
@@ -130,7 +129,7 @@ def parse_cbsl_pdf(pdf_path: str) -> pd.DataFrame:
     df = tables[0].df
     df.columns = [f"col_{i}" for i in range(df.shape[1])]
 
-    # ── Derive report_date from filename ─────────────────────────────────────
+    # Derive report_date from filename
     filename = os.path.basename(pdf_path)
     date_match = re.search(r"price_report_(\d{8})", filename)
     if date_match:
@@ -141,7 +140,7 @@ def parse_cbsl_pdf(pdf_path: str) -> pd.DataFrame:
             "Could not extract date from filename '%s'. Falling back to system date.", filename
         )
 
-    # ── Extract previous-report date from PDF header ──────────────────────────
+    # Extract previous-report date from PDF header 
     _, prev_date = extract_report_dates(df, report_date)
 
     df["report_date"] = report_date
