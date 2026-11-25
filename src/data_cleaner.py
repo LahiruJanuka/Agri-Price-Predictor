@@ -87,10 +87,11 @@ def clean_raw_data(raw_df):
                     logging.info(f"Changed tracking category to: {current_category}")
                     break
 
-        # Get item name, units, and report date from the row
+        # Get item name, units, report date, and previous-report date from the row
         item = str(row.iloc[0]).strip() if pd.notna(row.iloc[0]) else ""
         unit = str(row.iloc[1]).strip() if pd.notna(row.iloc[1]) else ""
         report_date_str = row.get('report_date')
+        prev_date_str = row.get('prev_date')   # extracted from PDF header by pdf_parser
 
         # Skip rows that don't have a valid date string
         if not report_date_str or pd.isna(report_date_str):
@@ -100,6 +101,14 @@ def clean_raw_data(raw_df):
             report_date = datetime.strptime(str(report_date_str), "%Y-%m-%d")
         except ValueError:
             continue
+
+        # Parse the previous-report date from the PDF header (may be None/NaN)
+        prev_date = None
+        if prev_date_str and not (isinstance(prev_date_str, float) and pd.isna(prev_date_str)):
+            try:
+                prev_date = datetime.strptime(str(prev_date_str), "%Y-%m-%d")
+            except ValueError:
+                pass
 
         # Commodity data rows must have valid item name and valid unit (e.g. Rs./kg)
         if not item or item.lower() in ['item', 'unit', 'nan', ''] or item.startswith('n.a.'):
@@ -116,7 +125,7 @@ def clean_raw_data(raw_df):
                 continue
 
             raw_val = str(row.iloc[mapping["col_idx"]]).strip().lower()
-            
+
             # Skip empty entries, dots, or "n.a." labels safely
             if raw_val in ['n.a.', 'na', '', 'nan', 'none', '.']:
                 continue
@@ -126,11 +135,21 @@ def clean_raw_data(raw_df):
             except ValueError:
                 continue
 
-            # Assign the correct date to the entry
+            # Assign the correct date using the actual date from the PDF header.
+            # For the previous-report column: use prev_date extracted from the PDF.
+            # If prev_date could not be read, skip the previous-report column entirely
+            # rather than silently inserting a wrongly dated record.
             if mapping["is_today"]:
                 target_date = report_date
             else:
-                target_date = report_date - timedelta(days=1)
+                if prev_date is None:
+                    logging.warning(
+                        "Skipping previous-report price for %s/%s/%s — "
+                        "prev_date not available from PDF header.",
+                        item, mapping["market"], mapping["price_type"]
+                    )
+                    continue
+                target_date = prev_date
 
             records.append({
                 'date': target_date.strftime("%Y-%m-%d"),
@@ -144,7 +163,7 @@ def clean_raw_data(raw_df):
 
     long_df = pd.DataFrame(records)
     if not long_df.empty:
-        long_df.drop_duplicates(subset=['date', 'item', 'market', 'price_type'], inplace=True)
+        long_df = long_df.drop_duplicates(subset=['date', 'item', 'market', 'price_type'])
         long_df['date'] = pd.to_datetime(long_df['date'])
         
     return long_df
