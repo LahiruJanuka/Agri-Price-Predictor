@@ -26,7 +26,7 @@ def load_data(state: Dict[str, Any]) -> Dict[str, Any]:
     """
     crop = state.get("crop")
     # Get the market and price type from state, or default to Pettah Wholesale if missing
-    market = state.get("market", "Pettah/Peliyagoda")
+    market = state.get("market", "Pettah")
     price_type = state.get("price_type", "Wholesale")
 
     if not crop:
