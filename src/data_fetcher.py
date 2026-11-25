@@ -3,16 +3,29 @@ from os.path import exists
 
 import requests
 from bs4 import BeautifulSoup
-from datetime import datetime
+from datetime import datetime, timedelta
 import os
 from .utils import ensure_dir
 
 CBSL_URL = "https://www.cbsl.gov.lk/en/statistics/economic-indicators/price-report"
 PDF_DIR = "data/raw_pdfs"
 
+# Headers that make requests look like a normal browser fetch.
+# CBSL rejects requests with the default python-requests UA.
+HEADERS = {
+    "User-Agent": (
+        "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
+        "AppleWebKit/537.36 (KHTML, like Gecko) "
+        "Chrome/120.0.0.0 Safari/537.36"
+    ),
+    "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
+    "Accept-Language": "en-US,en;q=0.9",
+    "Connection": "keep-alive",
+}
+
 def get_latest_pdf_url():
     """Fetch the URL of the latest price report PDF from the CBSL website"""
-    resp = requests.get(CBSL_URL)
+    resp = requests.get(CBSL_URL, headers=HEADERS, timeout=30)
     resp.raise_for_status()
     soup = BeautifulSoup(resp.text, 'html.parser')
 
@@ -35,7 +48,7 @@ def get_latest_pdf_url():
 
 def download_pdf(url, save_path):
     """Download PDF from URL and save to the save_path."""
-    resp = requests.get(url, stream=True)
+    resp = requests.get(url, headers=HEADERS, timeout=30, stream=True)
     resp.raise_for_status()
     with open(save_path, 'wb') as f:
         for chunk in resp.iter_content(chunk_size=8192):
