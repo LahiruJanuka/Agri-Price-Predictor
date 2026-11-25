@@ -10,6 +10,11 @@ on:
 jobs:
   scrape-and-update:
     runs-on: ubuntu-latest
+    
+    env:
+      AZURE_STORAGE_CONNECTION_STRING: ${{ secrets.AZURE_STORAGE_CONNECTION_STRING }}
+      AZURE_STORAGE_CONTAINER_NAME: agri-data
+      GROQ_API_KEY: ${{ secrets.GROQ_API_KEY }}
 
     steps:
       # 1. Pull down your repository files onto the GitHub runner
@@ -30,22 +35,5 @@ jobs:
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
       # 4. Run python scraping pipeline orchestration script
-      - name: Run Data Pipeline
-        run: python -m src.data_pipeline
-
-      # 5. Automatically commit and push the updated CSV back into your repository
-      - name: Commit and Push Updated Data Ledger
-        run: |
-          git config --global user.name "GoviBot [GitHub Action]"
-          git config --global user.email "govibot@users.noreply.github.com"
-          
-          # Only stage the specific data ledger to keep commits clean
-          git add data/processed/crop_history.csv
-          
-          # Check if there are actual updates to avoid empty build errors
-          if git diff --staged --quiet; then
-            echo "No new price updates found for today. Skipping commit."
-          else
-            git commit -m "Automated Sync: Updated Daily CBSL Ledger [skip ci]"
-            git push
-          fi
+      - name: Run Data Pipeline (restore DB → ingest → sync → persist)
+        run: python -c "from src.data_pipeline import run_full_pipeline_with_storage; run_full_pipeline_with_storage()"
