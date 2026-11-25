@@ -10,10 +10,10 @@ def run_test():
     print("=" * 60)
 
     # 1. Configure the explicit market channel you want to test
-    # Options for market: "Pettah/Peliyagoda", "Dambulla/Negombo"
+    # Options for market: "Pettah", "Dambulla", "Narahenpita", "Peliyagoda", "Negombo", "Marandagahamula"
     # Options for price_type: "Wholesale", "Retail"
     target_crop = "Brinjal"
-    target_market = "Dambulla/Negombo"
+    target_market = "Dambulla"
     target_price_type = "Wholesale"
 
     print(f"Targeting: {target_crop} | {target_market} ({target_price_type})")
