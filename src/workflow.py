@@ -76,7 +76,7 @@ def build_workflow():
 
 
 # App Execution Wrapper Function
-def predict_crop_price(crop: str, market: str = "Pettah/Peliyagoda", price_type: str = "Wholesale") -> Dict[str, Any]:
+def predict_crop_price(crop: str, market: str = "Pettah", price_type: str = "Wholesale") -> Dict[str, Any]:
     """
     Run the full compiled workflow for a given crop and return the final state dictionary.
     """
