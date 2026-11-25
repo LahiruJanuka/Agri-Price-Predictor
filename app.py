@@ -47,44 +47,38 @@ DATA_PATH = "data/processed/crop_history.csv"
 # Cache Loading Functions (Optimizes Speed)
 # ----------------------------------------------------------------------
 @st.cache_data
-def get_dropdown_options():
-    """Reads master file to provide dynamic choices for search selectors."""
-    if not os.path.exists(DATA_PATH):
-        return [], [], []
-    df = pd.read_csv(DATA_PATH)
-    
-    crops = sorted(df['item'].dropna().unique())
-    markets = sorted(df['market'].dropna().unique())
-    price_types = sorted(df['price_type'].dropna().unique())
-    return crops, markets, price_types
-
-@st.cache_data
-def load_historical_chart_data(crop, market, price_type):
-    """Filters historical dataset for line plot rendering."""
+def load_master_data():
+    """Reads master file to provide dynamic choices and records."""
     if not os.path.exists(DATA_PATH):
         return pd.DataFrame()
     df = pd.read_csv(DATA_PATH)
     df['date'] = pd.to_datetime(df['date'])
-    
-    filtered_df = df[
-        (df['item'].str.lower() == crop.lower()) &
-        (df['market'].str.lower() == market.lower()) &
-        (df['price_type'].str.lower() == price_type.lower())
-    ].sort_values('date')
-    return filtered_df
+    return df
 
-# Load options for dropdowns
-available_crops, available_markets, available_price_types = get_dropdown_options()
+df_master = load_master_data()
 
 # ----------------------------------------------------------------------
 # Sidebar Controls (Dynamic Searchable Options)
 # ----------------------------------------------------------------------
 st.sidebar.markdown("<h2 style='color:#2e7d32;'>🌾 Govi Control Panel</h2>", unsafe_allow_html=True)
-st.sidebar.write("Configure your market filter choices below:")
+st.sidebar.write("Configure your commodity and market filter choices below:")
 
-if available_crops:
-    selected_crop = st.sidebar.selectbox("🔎 Search or Select Crop", available_crops)
+if not df_master.empty:
+    available_crops = sorted(df_master['item'].dropna().unique())
+    selected_crop = st.sidebar.selectbox("🔎 Search or Select Commodity / Crop", available_crops)
+
+    # Filter markets available specifically for the selected commodity
+    crop_df = df_master[df_master['item'].str.lower() == selected_crop.lower()]
+    crop_category = crop_df['category'].iloc[0] if ('category' in crop_df.columns and not crop_df.empty) else ""
+    if crop_category:
+        st.sidebar.caption(f"📂 **Category:** {crop_category}")
+
+    available_markets = sorted(crop_df['market'].dropna().unique())
     selected_market = st.sidebar.selectbox("📍 Market Location", available_markets)
+
+    # Filter pricing channels available for this commodity in this specific market
+    market_crop_df = crop_df[crop_df['market'].str.lower() == selected_market.lower()]
+    available_price_types = sorted(market_crop_df['price_type'].dropna().unique())
     selected_price_type = st.sidebar.selectbox("💰 Pricing Type", available_price_types)
 else:
     st.sidebar.error("Historical data ledger file missing!")
@@ -92,6 +86,7 @@ else:
 
 st.sidebar.markdown("---")
 st.sidebar.write("📊 **Source Data:** Central Bank of Sri Lanka (CBSL)")
+st.sidebar.caption("Markets tracked: Pettah, Dambulla, Narahenpita, Peliyagoda, Negombo, Marandagahamula.")
 
 # ----------------------------------------------------------------------
 # Main Application Dashboard
@@ -110,13 +105,17 @@ st.markdown("""
 st.write("")
 
 # Pull specific filtered history to display the line graph immediately
-df_crop = load_historical_chart_data(selected_crop, selected_market, selected_price_type)
+df_crop = market_crop_df[
+    market_crop_df['price_type'].str.lower() == selected_price_type.lower()
+].sort_values('date')
+
+unit = df_crop['unit'].iloc[-1] if (not df_crop.empty and 'unit' in df_crop.columns) else "Rs./kg"
 
 if not df_crop.empty:
     fig = px.line(
         df_crop, x='date', y='price',
         title=f"📈 Pricing Trend: {selected_crop} at {selected_market} ({selected_price_type})",
-        labels={'price': 'Price (LKR/kg)', 'date': 'Date'},
+        labels={'price': f'Price ({unit})', 'date': 'Date'},
         line_shape='linear',
         template='plotly_white'  # Fallback baseline transparent layout look
     )
@@ -153,13 +152,14 @@ if st.button("Consult AI Market Advisor", type="primary"):
         prediction = float(result['prediction'])
         variance = prediction - current
         
-        col1.metric(label="Latest Recorded Price", value=f"Rs. {current:.2f} /kg")
+        col1.metric(label="Latest Recorded Price", value=f"Rs. {current:.2f}", help=f"Unit: {unit}")
         col2.metric(
             label="Predicted Price (Tomorrow)", 
-            value=f"Rs. {prediction:.2f} /kg",
-            delta=f"{variance:+.2f} LKR/kg"
+            value=f"Rs. {prediction:.2f}",
+            delta=f"{variance:+.2f} ({unit})",
+            help=f"Unit: {unit}"
         )
-        col3.metric(label="Calculated 7-Day Running Average", value=f"Rs. {float(result['week_avg']):.2f} /kg")
+        col3.metric(label="Calculated 7-Day Running Average", value=f"Rs. {float(result['week_avg']):.2f}", help=f"Unit: {unit}")
 
         # Market Insights Text Box Configuration
         st.write("")
